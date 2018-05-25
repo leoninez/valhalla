@@ -33,7 +33,7 @@ public class SearchQueryOutput {
     public static void main(String[] args) {
         SearchQueryOutput output =
             SearchQueryOutput.fromString(
-                "running_queue_app_metrics[@snapTimestamp>1524553500000](@allocatedMB>)@1000");
+                "domestic_cosmetic[@chineseName~\"葡萄\"]");
 
 
         System.out.println(output.clzName);

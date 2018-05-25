@@ -1,9 +1,6 @@
 package com.ebay.valhalla.rest.filter;
 
-import com.ebay.valhalla.api.filter.ElasticExistsFilter;
-import com.ebay.valhalla.api.filter.ElasticFilter;
-import com.ebay.valhalla.api.filter.ElasticLongRangeFilter;
-import com.ebay.valhalla.api.filter.ElasticTermFilter;
+import com.ebay.valhalla.api.filter.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -66,6 +63,19 @@ public class ElasticRestSearchParser {
                 }
 
                 queryObj.add("term", object);
+                break;
+
+            case MATCH:
+                ElasticMatchFilter mf = (ElasticMatchFilter) filter;
+                if (mf.isString()) {
+                    object.add(mf.getField(), new JsonPrimitive(mf.getStringValue()));
+                } else if (mf.isNumber()) {
+                    object.add(mf.getField(), new JsonPrimitive(mf.getNumberValue()));
+                } else if (mf.isBoolean()) {
+                    object.add(mf.getField(), new JsonPrimitive(mf.getBooleanValue()));
+                }
+
+                queryObj.add("match", object);
                 break;
 
             case RANGE:
