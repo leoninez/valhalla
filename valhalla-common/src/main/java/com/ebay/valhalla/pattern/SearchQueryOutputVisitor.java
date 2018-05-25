@@ -117,8 +117,9 @@ public class SearchQueryOutputVisitor extends SearchQueryBaseVisitor<SearchQuery
                 TerminalNode numNode = equalContext.value().NUM();
                 TerminalNode strNode = equalContext.value().STR();
                 TerminalNode boolNode = equalContext.value().BOOL();
+                TerminalNode chinNode = equalContext.value().CHIN_STR();
 
-                if (strNode != null) {
+                if (strNode != null || chinNode != null) {
                     list.add(new ElasticTermFilter(equalContext.KEY().getText(),
                         value.substring(1, value.length() - 1)));
                 } else if (numNode != null) {
@@ -130,18 +131,19 @@ public class SearchQueryOutputVisitor extends SearchQueryBaseVisitor<SearchQuery
                 }
             }
             if (matchContext != null) {
-                String value = equalContext.value().getText();
-                TerminalNode numNode = equalContext.value().NUM();
-                TerminalNode strNode = equalContext.value().STR();
-                TerminalNode boolNode = equalContext.value().BOOL();
+                String value = matchContext.value().getText();
+                TerminalNode numNode = matchContext.value().NUM();
+                TerminalNode strNode = matchContext.value().STR();
+                TerminalNode boolNode = matchContext.value().BOOL();
+                TerminalNode chinNode = matchContext.value().CHIN_STR();
 
-                if (strNode != null) {
-                    list.add(new ElasticTermFilter(equalContext.KEY().getText(),
+                if (strNode != null || chinNode != null) {
+                    list.add(new ElasticTermFilter(matchContext.KEY().getText(),
                         value.substring(1, value.length() - 1)));
                 } else if (numNode != null) {
-                    list.add(new ElasticTermFilter(equalContext.KEY().getText(), Long.parseLong(value)));
+                    list.add(new ElasticTermFilter(matchContext.KEY().getText(), Long.parseLong(value)));
                 } else if (boolNode != null) {
-                    list.add(new ElasticTermFilter(equalContext.KEY().getText(), value.equals("true")));
+                    list.add(new ElasticTermFilter(matchContext.KEY().getText(), value.equals("true")));
                 } else {
                     // should not reach here...
                 }

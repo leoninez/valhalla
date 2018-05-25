@@ -53,10 +53,11 @@ aggregator_histo_item: 'histo('KEY','NUM')';
 search_max_size : '@'NUM;
 
 key_list : KEY','key_list | KEY;
-value: NUM | STR | BOOL;
+value: NUM | STR | CHIN_STR | BOOL;
 
 BOOL : 'true'|'false';
 DATEKEY : '201'[0-9]'-'[0-9][0-9]'-'[0-9][0-9]'_'[0-9][0-9]':'[0-9][0-9]':'[0-9][0-9];
 STR : '"'[_\-a-zA-Z0-9. ]+'"';
+CHIN_STR : '"'[\u4E00-\u9FA5\uF900-\uFA2D]+'"';
 KEY : [_a-zA-Z][_a-zA-Z0-9.]*;
 NUM : [0-9]+ ;
