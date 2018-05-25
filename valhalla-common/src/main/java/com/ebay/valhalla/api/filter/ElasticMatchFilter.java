@@ -13,7 +13,7 @@ public class ElasticMatchFilter implements ElasticFilter {
 
     @Override
     public ElasticFilterType type() {
-        return ElasticFilterType.TERM;
+        return ElasticFilterType.MATCH;
     }
 
     public String getField() {

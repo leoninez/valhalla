@@ -4,6 +4,7 @@ package com.ebay.valhalla.pattern;
 import com.ebay.valhalla.api.aggregate.ElasticAggregate;
 import com.ebay.valhalla.api.filter.ElasticFilter;
 import com.ebay.valhalla.api.filter.ElasticLongRangeFilter;
+import com.ebay.valhalla.api.filter.ElasticMatchFilter;
 import com.ebay.valhalla.api.filter.ElasticTermFilter;
 import com.ebay.valhalla.api.sort.ElasticFieldSort;
 import com.ebay.valhalla.api.sort.ElasticSort;
@@ -138,12 +139,12 @@ public class SearchQueryOutputVisitor extends SearchQueryBaseVisitor<SearchQuery
                 TerminalNode chinNode = matchContext.value().CHIN_STR();
 
                 if (strNode != null || chinNode != null) {
-                    list.add(new ElasticTermFilter(matchContext.KEY().getText(),
+                    list.add(new ElasticMatchFilter(matchContext.KEY().getText(),
                         value.substring(1, value.length() - 1)));
                 } else if (numNode != null) {
-                    list.add(new ElasticTermFilter(matchContext.KEY().getText(), Long.parseLong(value)));
+                    list.add(new ElasticMatchFilter(matchContext.KEY().getText(), Long.parseLong(value)));
                 } else if (boolNode != null) {
-                    list.add(new ElasticTermFilter(matchContext.KEY().getText(), value.equals("true")));
+                    list.add(new ElasticMatchFilter(matchContext.KEY().getText(), value.equals("true")));
                 } else {
                     // should not reach here...
                 }
