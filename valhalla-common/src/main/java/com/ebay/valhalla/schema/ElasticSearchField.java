@@ -19,9 +19,16 @@ public class ElasticSearchField implements GsonJsonable {
     public JsonElement toJson() {
         JsonObject fieldObj = new JsonObject();
 
-        fieldObj.addProperty("type", this.type.name().toLowerCase());
-        if (!indexEnabled) {
-            fieldObj.addProperty("index", false);
+        // chinese analyzer
+        if (this.type == ElasticSearchFieldType.IK) {
+            fieldObj.addProperty("type", "text");
+            fieldObj.addProperty("analyzer", "ik_max_word");
+            fieldObj.addProperty("search_analyzer", "ik_max_word");
+        } else {
+            fieldObj.addProperty("type", this.type.name().toLowerCase());
+            if (!indexEnabled) {
+                fieldObj.addProperty("index", false);
+            }
         }
 
         return fieldObj;

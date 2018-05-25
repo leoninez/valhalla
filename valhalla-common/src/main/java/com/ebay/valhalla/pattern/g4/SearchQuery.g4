@@ -9,9 +9,10 @@ clzName : KEY;
 
 filter : '['filter_list']' | '[]';
 filter_list : (filter_item','filter_list) | filter_item;
-filter_item : filter_item_equal | filter_item_range | filter_item_time_range | filter_item_compare;
+filter_item : filter_item_equal | filter_match_equal | filter_item_range | filter_item_time_range | filter_item_compare;
 //filter_item : filter_item_equal;
 filter_item_equal : '@'KEY'='value;
+filter_match_equal : '@'KEY'~'value;
 filter_item_range : '@'KEY'=['NUM','NUM']';
 filter_item_time_range : '@'KEY'=['DATEKEY','DATEKEY']';
 filter_item_compare : '@'KEY sort_item_order NUM;

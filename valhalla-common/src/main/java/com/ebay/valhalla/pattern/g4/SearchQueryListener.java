@@ -1,4 +1,4 @@
-// Generated from /Users/lzhou5/work/github/job-monitoring/jpm-valhalla/valhalla-common/src/main/java/com/ebay/valhalla/pattern/g4/SearchQuery.g4 by ANTLR 4.7
+// Generated from /Users/lzhou5/github/valhalla/valhalla-common/src/main/java/com/ebay/valhalla/pattern/g4/SearchQuery.g4 by ANTLR 4.7
 package com.ebay.valhalla.pattern.g4;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -67,6 +67,16 @@ public interface SearchQueryListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFilter_item_equal(SearchQueryParser.Filter_item_equalContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SearchQueryParser#filter_match_equal}.
+	 * @param ctx the parse tree
+	 */
+	void enterFilter_match_equal(SearchQueryParser.Filter_match_equalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SearchQueryParser#filter_match_equal}.
+	 * @param ctx the parse tree
+	 */
+	void exitFilter_match_equal(SearchQueryParser.Filter_match_equalContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SearchQueryParser#filter_item_range}.
 	 * @param ctx the parse tree

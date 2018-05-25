@@ -107,6 +107,7 @@ public class SearchQueryOutputVisitor extends SearchQueryBaseVisitor<SearchQuery
             SearchQueryParser.Filter_itemContext itemContext = listContext.filter_item();
 
             SearchQueryParser.Filter_item_equalContext equalContext = itemContext.filter_item_equal();
+            SearchQueryParser.Filter_match_equalContext matchContext = itemContext.filter_match_equal();
             SearchQueryParser.Filter_item_rangeContext rangeContext = itemContext.filter_item_range();
             SearchQueryParser.Filter_item_time_rangeContext time_rangeContext = itemContext.filter_item_time_range();
             SearchQueryParser.Filter_item_compareContext compareContext = itemContext.filter_item_compare();
@@ -117,6 +118,22 @@ public class SearchQueryOutputVisitor extends SearchQueryBaseVisitor<SearchQuery
                 TerminalNode strNode = equalContext.value().STR();
                 TerminalNode boolNode = equalContext.value().BOOL();
 
+                if (strNode != null) {
+                    list.add(new ElasticTermFilter(equalContext.KEY().getText(),
+                        value.substring(1, value.length() - 1)));
+                } else if (numNode != null) {
+                    list.add(new ElasticTermFilter(equalContext.KEY().getText(), Long.parseLong(value)));
+                } else if (boolNode != null) {
+                    list.add(new ElasticTermFilter(equalContext.KEY().getText(), value.equals("true")));
+                } else {
+                    // should not reach here...
+                }
+            }
+            if (matchContext != null) {
+                String value = equalContext.value().getText();
+                TerminalNode numNode = equalContext.value().NUM();
+                TerminalNode strNode = equalContext.value().STR();
+                TerminalNode boolNode = equalContext.value().BOOL();
 
                 if (strNode != null) {
                     list.add(new ElasticTermFilter(equalContext.KEY().getText(),
@@ -139,7 +156,7 @@ public class SearchQueryOutputVisitor extends SearchQueryBaseVisitor<SearchQuery
                 String op = compareContext.sort_item_order().getText();
 
                 list.add(new ElasticLongRangeFilter(compareContext.KEY().getText(), value1,
-                    op.equals(">")? ElasticLongRangeFilter.CompareOP.LARGER : ElasticLongRangeFilter.CompareOP.SMALLER));
+                    op.equals(">") ? ElasticLongRangeFilter.CompareOP.LARGER : ElasticLongRangeFilter.CompareOP.SMALLER));
             } else {
                 long value1 = ElasticExecutorUtil.toTimestamp(time_rangeContext.DATEKEY(0).getText());
                 long value2 = ElasticExecutorUtil.toTimestamp(time_rangeContext.DATEKEY(0).getText());

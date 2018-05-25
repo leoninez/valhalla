@@ -1,4 +1,4 @@
-// Generated from /Users/lzhou5/work/github/job-monitoring/jpm-valhalla/valhalla-common/src/main/java/com/ebay/valhalla/pattern/g4/SearchQuery.g4 by ANTLR 4.7
+// Generated from /Users/lzhou5/github/valhalla/valhalla-common/src/main/java/com/ebay/valhalla/pattern/g4/SearchQuery.g4 by ANTLR 4.7
 package com.ebay.valhalla.pattern.g4;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -83,6 +83,18 @@ public class SearchQueryBaseListener implements SearchQueryListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFilter_item_equal(SearchQueryParser.Filter_item_equalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFilter_match_equal(SearchQueryParser.Filter_match_equalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFilter_match_equal(SearchQueryParser.Filter_match_equalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
