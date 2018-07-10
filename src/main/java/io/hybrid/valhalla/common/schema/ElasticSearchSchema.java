@@ -29,7 +29,6 @@ public class ElasticSearchSchema {
     public int limit = 1;
     public Map<String, String> insertParams;
 
-
     // -- table creation related
 
     public ElasticSearchSchema(Class clz) {
