@@ -151,7 +151,7 @@ public class ElasticRestExecutor implements ElasticExecutor {
         try {
             response = this.client.performRequest("HEAD", "/" + index);
         } catch (IOException e) {
-            log.error("Unable to check existed index : {}", index, e);
+            //log.error("Unable to check existed index : {}", index, e);
             return false;
         }
 
@@ -399,7 +399,7 @@ public class ElasticRestExecutor implements ElasticExecutor {
             Response response = this.client.performRequest("DELETE", "/" + targetIndex + "/" + schema.type + "/" + id);
             return ResponseHelper.documentDeletedCheck(response);
         } catch (IOException e) {
-            log.error("Unable to delete index : {} - {} id = {}", targetIndex, schema.type, id, e);
+            //log.error("Unable to delete index : {} - {} id = {}", targetIndex, schema.type, id, e);
             return false;
         }
     }
