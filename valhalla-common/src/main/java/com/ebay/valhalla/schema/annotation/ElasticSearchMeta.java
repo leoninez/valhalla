@@ -14,6 +14,8 @@ public @interface ElasticSearchMeta {
 
     String type() default "data";
 
+    boolean filedIndex() default true;
+
     String[] id() default {};
 
     int shards() default 13;

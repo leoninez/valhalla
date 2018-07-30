@@ -16,7 +16,7 @@ public class BanelingWebServer {
 
         // build es config for connection
         ElasticClientConf elasticClientConf = new ElasticClientConf();
-        Config setting = ConfigFactory.load("Setting.conf");
+        Config setting = ConfigFactory.load("es_setting.conf");
         String esServer = setting.getString("elasticServer");
         elasticClientConf.hostPorts = new String[]{ esServer };
         serverConf.esConf = elasticClientConf;

@@ -64,7 +64,7 @@ public class ElasticSearchSchemaManager implements ElasticSearchSchema.Manager {
 
         if (parseField) {
             ElasticSearchProperties properties = new ElasticSearchProperties();
-            buildProperties(clz, properties);
+            buildProperties(clz, properties, ei);
             schema.properties = properties;
             schema.insertParams = new HashMap<>();
         }
@@ -72,7 +72,7 @@ public class ElasticSearchSchemaManager implements ElasticSearchSchema.Manager {
         return schema;
     }
 
-    protected void buildProperties(Class clz, ElasticSearchProperties properties) {
+    protected void buildProperties(Class clz, ElasticSearchProperties properties, ElasticSearchMeta ei) {
         // scan fields
         Field[] fields = clz.getDeclaredFields();
 
@@ -101,7 +101,7 @@ public class ElasticSearchSchemaManager implements ElasticSearchSchema.Manager {
             Class fclzType = f.getType();
 
             if (index == null) {
-                needIndex = false;
+                needIndex = ei.filedIndex();
                 if (isFullCreationMapping) {
                     type = getFieldType(f);
                 } else {
@@ -122,12 +122,12 @@ public class ElasticSearchSchemaManager implements ElasticSearchSchema.Manager {
 
             if (type == ElasticSearchFieldType.OBJECT) {
                 ElasticSearchProperties subProperties = new ElasticSearchProperties();
-                buildProperties(fclzType, subProperties);
+                buildProperties(fclzType, subProperties, ei);
                 properties.fields.add(
                     new ElasticSearchComplexField(target, ElasticSearchFieldType.OBJECT, needIndex, subProperties));
             } else if (type == ElasticSearchFieldType.NESTED) {
                 ElasticSearchProperties subProperties = new ElasticSearchProperties();
-                buildProperties(fclzType, subProperties);
+                buildProperties(fclzType, subProperties,ei);
                 properties.fields.add(
                     new ElasticSearchComplexField(target, ElasticSearchFieldType.NESTED, needIndex, subProperties));
             } else {
@@ -145,7 +145,7 @@ public class ElasticSearchSchemaManager implements ElasticSearchSchema.Manager {
         }
 
         // check up parent
-        buildProperties(clz.getSuperclass(), properties);
+        buildProperties(clz.getSuperclass(), properties, ei);
     }
 
     private ElasticSearchFieldType getFieldType(Field f) {
@@ -173,7 +173,8 @@ public class ElasticSearchSchemaManager implements ElasticSearchSchema.Manager {
             return ElasticSearchFieldType.DOUBLE;
         } else if (clz.equals(String.class) || clz.isEnum()) {
             // @NOTE @TODO if you want to txt, you need explicitly define it
-            return ElasticSearchFieldType.KEYWORD;
+            // make all string field can be search by es: use text
+            return ElasticSearchFieldType.TEXT;
         } else if (clz.equals(Boolean.TYPE)) {
             return ElasticSearchFieldType.BOOLEAN;
         } else if (clz.equals(Date.class)) {
