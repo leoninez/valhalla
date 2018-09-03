@@ -425,6 +425,19 @@ public class ElasticRestExecutor implements ElasticExecutor {
     }
 
     @Override
+    public boolean exist(Class clz, String id) {
+        ElasticSearchSchema schema = ElasticSearchSchema.getOrBuild(clz);
+        String targetIndex = schema.getWriteIndex();
+
+        try {
+            Response response = this.client.performRequest("HEAD", "/" + targetIndex + "/" + schema.type + "/" + id);
+            return ResponseHelper.response200Check(response);
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    @Override
     public JsonElement rawGet(Class clz, String id) {
         return rawGet(clz, null, id);
     }
@@ -868,7 +881,9 @@ public class ElasticRestExecutor implements ElasticExecutor {
             searchObj.add("_source", fieldList);
         }
 
-        searchObj.add("query", ElasticRestSearchParser.parse(filters));
+        if (filters != null && filters.length > 0) {
+            searchObj.add("query", ElasticRestSearchParser.parse(filters));
+        }
 
         if (sorts != null && sorts.length > 0) {
             searchObj.add("sort", ElasticRestSortParser.parse(sorts));

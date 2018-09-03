@@ -55,6 +55,21 @@ public class ElasticSearchSchema {
         settings.addProperty("number_of_shards", this.shards);
         settings.addProperty("number_of_replicas", this.replicas);
 
+        JsonObject myAnalyzer = new JsonObject();
+        myAnalyzer.addProperty("type", "custom");
+        myAnalyzer.addProperty("tokenizer", "icu_tokenizer");
+
+        JsonObject analyzer = new JsonObject();
+        analyzer.add("icu_analyzer", myAnalyzer);
+
+        JsonObject analysis = new JsonObject();
+        analysis.add("analyzer", analyzer);
+
+        JsonObject index = new JsonObject();
+        index.add("analysis", analysis);
+
+        settings.add("index", index);
+
         return settings;
     }
 

@@ -100,6 +100,8 @@ public interface ElasticExecutor extends Closeable {
 
     <T extends Object> T[] getAll(Class<T[]> arrayClz);
 
+    boolean exist(Class clz, String id);
+
     JsonElement rawGet(Class clz, String id);
 
     JsonElement rawGet(Class clz, Calendar day, String id);

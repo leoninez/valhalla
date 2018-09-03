@@ -200,6 +200,11 @@ public class ElasticDualPortRestExecutor implements ElasticExecutor {
     }
 
     @Override
+    public boolean exist(Class clz, String id) {
+        return readExecutor.exist(clz, id);
+    }
+
+    @Override
     public JsonElement rawGet(Class clz, String id) {
         return readExecutor.rawGet(clz, id);
     }

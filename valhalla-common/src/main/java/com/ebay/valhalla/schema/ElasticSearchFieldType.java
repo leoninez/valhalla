@@ -20,5 +20,6 @@ public enum ElasticSearchFieldType {
     NESTED,
     AUTO,           // auto detect, default value
     IK,
+    ICU,
     NONE            // unknown version
 }
