@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>valhalla</artifactId>
-        <groupId>com.ebay.valhalla</groupId>
+        <groupId>com.tang.valhalla</groupId>
         <version>0.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -26,7 +26,7 @@
 
         <!-- Internal Reference -->
         <dependency>
-            <groupId>com.ebay.valhalla</groupId>
+            <groupId>com.tang.valhalla</groupId>
             <artifactId>valhalla-common</artifactId>
             <version>${project.version}</version>
         </dependency>
